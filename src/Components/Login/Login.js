@@ -5,18 +5,19 @@ import Logo from '../../olx-logo.png';
 import './Login.css';
 import {signInWithEmailAndPassword} from 'firebase/auth'
 import { auth } from '../../firebase/config';
-
+import {useNavigate} from 'react-router-dom'
 
 
 function Login() {
 
+  const history = useNavigate()
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
   const handleLogin = (e)=>{
     e.preventDefault()
     signInWithEmailAndPassword(auth,email,password)
     .then(()=>{
-      alert('Login')
+      history('/')
     }).catch((error)=>{
       alert(error.message)
     })
@@ -53,7 +54,9 @@ function Login() {
           <br />
           <button>Login</button>
         </form>
-        <a>Signup</a>
+        <a onClick={()=>{
+          history('/signup')
+        }}>Signup</a>
       </div>
     </div>
   );
